@@ -1,11 +1,6 @@
 ﻿using AspNetCoreGraphQLApi.GraphQL.Types;
-using CarvedRock.Api.Repositories;
+using AspNetCoreGraphQLApi.Repositories;
 using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspNetCoreGraphQLApi.GraphQL
 {
@@ -14,6 +9,17 @@ namespace AspNetCoreGraphQLApi.GraphQL
         public CarvedRockQuery(ProductRepository productRepository)
         {
             Field<ListGraphType<ProductType>>("products", resolve: context => productRepository.GetAll());
+
+            Field<ProductType>(
+                "product",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>>
+                { Name = "id" }),
+                resolve: context =>
+                {
+                    var id = context.GetArgument<int>("id");
+                    return productRepository.GetOne(id);
+                }
+            );
         }
     }
 }

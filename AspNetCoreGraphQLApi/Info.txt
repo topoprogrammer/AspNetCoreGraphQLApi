@@ -1,1 +1,1 @@
-﻿Starting with GraphQL -> Writing a Schema
+﻿Creating a GraphQL API -> Arguments

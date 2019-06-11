@@ -4,7 +4,7 @@ using AspNetCoreGraphQLApi.Data;
 using AspNetCoreGraphQLApi.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarvedRock.Api.Repositories
+namespace AspNetCoreGraphQLApi.Repositories
 {
     public class ProductRepository
     {
@@ -18,6 +18,11 @@ namespace CarvedRock.Api.Repositories
         public Task<List<Product>> GetAll()
         {
             return _dbContext.Products.ToListAsync();
+        }
+
+        public Task<Product> GetOne(int id)
+        {
+            return _dbContext.Products.SingleAsync(p => p.Id == id);
         }
     }
 }
